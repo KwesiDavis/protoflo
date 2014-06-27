@@ -1,0 +1,231 @@
+{
+    "properties": {
+        "name": "runlight",
+        "environment": {
+            "runtime": "protoflo"
+        }
+    },
+    "exports": [],
+    "groups": [],
+    "processes": {
+        "start-time"    : { "component": "Time" },
+        "sleep1-level1" : { "component": "SleepSubNet" },
+        "sleep1-level2" : { "component": "SleepSubNet" },
+        "sleep2-level2" : { "component": "SleepSubNet" },
+        "sleep1-level3" : { "component": "SleepSubNet" },
+        "sleep2-level3" : { "component": "SleepSubNet" },
+        "sleep3-level3" : { "component": "SleepSubNet" },
+        "sleep4-level3" : { "component": "SleepSubNet" },
+        "join1"         : { "component": "Add" },
+        "join2"         : { "component": "Add" },
+        "join3"         : { "component": "Add" },
+        "end-time"      : { "component": "Time" },
+        "run-time"      : { "component": "Subtract" },
+        "float-to-str"  : { "component": "Str" },
+        "concatenate"   : { "component": "Add" },
+        "print"         : { "component": "WriteStdOut" }
+    },
+    "connections": [
+        {
+            "data": "kick",
+            "tgt": {
+                "process": "start-time",
+                "port": "kick"
+            }
+        },
+        {
+            "data": 1,
+            "tgt": {
+                "process": "sleep1-level1",
+                "port": "in"
+            }
+        },
+        {
+            "data": "\n",
+            "tgt": {
+                "process": "concatenate",
+                "port": "b"
+            }
+        },
+        {
+          "src": {
+            "process": "sleep1-level1", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "sleep1-level2",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep1-level1", 
+            "port": "out2"
+          }, 
+          "tgt": {
+            "process": "sleep2-level2",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep1-level2", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "sleep1-level3",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep1-level2", 
+            "port": "out2"
+          }, 
+          "tgt": {
+            "process": "sleep2-level3",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep2-level2", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "sleep3-level3",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep2-level2", 
+            "port": "out2"
+          }, 
+          "tgt": {
+            "process": "sleep4-level3",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep1-level3", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join1",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep2-level3", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join1",
+            "port": "b"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep3-level3", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join2",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep4-level3", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join3",
+            "port": "b"
+           }
+        },
+        {
+          "src": {
+            "process": "join1", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join3",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "join2", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join3",
+            "port": "b"
+           }
+        },
+        {
+          "src": {
+            "process": "join3", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "end-time",
+            "port": "kick"
+           }
+        },
+        {
+          "src": {
+            "process": "end-time", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "run-time",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "start-time", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "run-time",
+            "port": "b"
+           }
+        },
+        {
+          "src": {
+            "process": "run-time", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "float-to-str",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "float-to-str", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "concatenate",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "concatenate", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "print",
+            "port": "in"
+           }
+        }
+    ]
+}

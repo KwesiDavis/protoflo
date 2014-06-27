@@ -1,0 +1,84 @@
+{
+    "properties": {
+        "name": "runlight",
+        "environment": {
+            "runtime": "protoflo"
+        }
+    },
+    "groups": [],
+    "processes": {
+        "share-input"  : { "component": "Clone" },
+        "sleep"        : { "component": "Sleep" },
+        "none-to-int"  : { "component": "Invert" },
+        "join"         : { "component": "Multiply" },
+        "share-output" : { "component": "Clone" }
+    },
+    "inports": {
+        "in": {
+          "process": "share-input", 
+          "port": "in"
+        } 
+    }, 
+    "connections": [
+        {
+          "src": {
+            "process": "share-input", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "sleep",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "sleep", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "none-to-int",
+            "port": "in"
+           }
+        },
+        {
+          "src": {
+            "process": "none-to-int", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "join",
+            "port": "a"
+           }
+        },
+        {
+          "src": {
+            "process": "share-input", 
+            "port": "out2"
+          }, 
+          "tgt": {
+            "process": "join",
+            "port": "b"
+           }
+        },
+        {
+          "src": {
+            "process": "join", 
+            "port": "out"
+          }, 
+          "tgt": {
+            "process": "share-output",
+            "port": "in"
+           }
+        }
+    ],
+    "outports": {
+        "out": {
+          "process": "share-output", 
+          "port": "out"
+        },
+        "out2": {
+          "process": "share-output", 
+          "port": "out2"
+        }
+    }
+}
